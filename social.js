@@ -100,7 +100,16 @@ function mostFollowers(){
 
 // Identify who has the most followers over 30
 function mostFollowers30(){
-
+  var count = 0;
+  var who = '';
+  var object = listPeople();
+  for(var names in object){
+    if(object[names].followers.length > count){
+      count = object[names].followers.length;
+      who = names;
+    }
+  }
+  return who;
 }
 
 
@@ -123,6 +132,25 @@ function reach(){
 
 
 console.log(listPeople());
+//output
+// { Alice:
+//    { follows: [ 'Bob', 'Charlie', 'Debbie' ],
+//      followers: [ 'Charlie', 'Debbie' ] },
+//   Bob:
+//    { follows: [ 'Elizabeth', 'Finn' ],
+//      followers: [ 'Alice', 'Debbie' ] },
+//   Charlie:
+//    { follows: [ 'Alice', 'Debbie', 'Finn' ],
+//      followers: [ 'Alice', 'Debbie' ] },
+//   Debbie:
+//    { follows: [ 'Alice', 'Bob', 'Charlie', 'Elizabeth', 'Finn' ],
+//      followers: [ 'Alice', 'Charlie', 'Elizabeth' ] },
+//   Elizabeth:
+//    { follows: [ 'Debbie' ],
+//      followers: [ 'Bob', 'Debbie', 'Finn' ] },
+//   Finn:
+//    { follows: [ 'Elizabeth' ],
+//      followers: [ 'Bob', 'Charlie', 'Debbie' ] } }
 console.log(mostFollow());
 console.log(mostFollowers());
 console.log(mostFollowers30());
