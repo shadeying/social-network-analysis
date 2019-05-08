@@ -100,13 +100,25 @@ function mostFollowers(){
 
 // Identify who has the most followers over 30
 function mostFollowers30(){
-  var count = 0;
   var who = '';
-  var object = listPeople();
-  for(var names in object){
-    if(object[names].followers.length > count){
-      count = object[names].followers.length;
-      who = names;
+  var object = {};
+  for(let name in listPeople()){
+    object[name] = listPeople()[name].followers;
+  }
+
+  var sum = 0;
+  for(let people in object){
+    var count = 0;
+    for(let i = 0; i < object[people].length; i++){
+      for(let code in data){
+        if(object[people][i] === data[code].name && data[code].age > 30){
+          count++;
+        }
+      }
+    }
+    if(count > sum){
+      sum = count;
+      who = people;
     }
   }
   return who;
@@ -115,13 +127,53 @@ function mostFollowers30(){
 
 // Identify who follows the most people over 30
 function mostFollow30(){
+  var who = '';
+  var object = {};
+  for(let name in listPeople()){
+    object[name] = listPeople()[name].follows;
+  }
 
+  var sum = 0;
+  for(let people in object){
+    var count = 0;
+    for(let i = 0; i < object[people].length; i++){
+      for(let code in data){
+        if(object[people][i] === data[code].name && data[code].age > 30){
+          count++;
+        }
+      }
+    }
+    if(count > sum){
+      sum = count;
+      who = people;
+    }
+  }
+  return who;
 }
 
 
 // List those who follow someone that doesn't follow them back
 function doNotFollowBack(){
-
+  const list = [];
+  let object = listPeople();
+  for(let people in object){
+    if(object[people].follows.length > object[people].followers.length){
+      list.push(people);
+    }else{
+      var count = 0;
+      for(let i = 0; i < object[people].follows.length; i++){
+        for(let j = 0; j < object[people].followers.length; j++){
+          if(object[people].follows[i] === object[people].followers[j]){
+            count++;
+          }
+        }
+      }
+      if(count < object[people].follows.length){
+        list.push(people);
+      }
+    }
+  }
+  return list;
 }
 
 
