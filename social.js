@@ -179,7 +179,20 @@ function doNotFollowBack(){
 
 // List everyone and their reach (sum of # of followers and # of followers of followers)
 function reach(){
-
+  var object = {};
+  for(let name in listPeople()){
+    object[name] = {};
+    object[name].followers = {};
+    object[name].followersNumber = listPeople()[name].followers.length;
+    for(let i = 0; i < listPeople()[name].followers.length; i++){
+      for(let people in listPeople()){
+        if(listPeople()[name].followers[i] === people){
+          object[name].followers[people] = listPeople()[people].followers.length;
+        }
+      }
+    }
+  }
+  return object;
 }
 
 
